@@ -1,0 +1,78 @@
+/*
+ * Copyright 2017 47 Degrees, LLC. <http://www.47deg.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package sbtembeddedcassandra
+
+import sbt._
+import sbt.Keys._
+import sbt.internal.util.ManagedLogger
+import sbtembeddedcassandra.cassandra.CassandraUtils
+import sbtembeddedcassandra.io.IOUtils
+import sbtembeddedcassandra.syntax._
+
+import scala.concurrent.duration._
+
+object EmbeddedCassandraPlugin extends AutoPlugin {
+
+  object autoImport extends EmbeddedCassandraKeys
+
+  import autoImport._
+
+  private[this] val cassandraConfInput   = "/basic-cassandra-conf.yml"
+  private[this] val cassandraConfOutput  = "cassandra-conf.yml"
+  private[this] val cassandraLog4jInput  = "/basic-cassandra-log4j.properties"
+  private[this] val cassandraLog4jOutput = "log4j.properties"
+
+  def sbtLogger(logger: Logger): SyntaxLogger = new SyntaxLogger {
+    override def error(msg: String): Unit = logger.err(msg)
+    override def info(msg: String): Unit  = logger.info(msg)
+  }
+
+  lazy val embeddedCassandraDefaultSettings: Seq[Def.Setting[_]] = Seq(
+    embeddedCassandraPropertiesSetting := defaultProperties,
+    embeddedCassandraConfigFileSetting := defaultConfigFile,
+    embeddedCassandraWorkingDirectorySetting := new File(defaultWorkingDirectory)
+  ) ++ embeddedCassandraKeysDef
+
+  lazy val embeddedCassandraKeysDef: Seq[Def.Setting[_]] = Seq(
+    embeddedCassandraCreateConfigFile := {
+      val workingDir: java.io.File       = embeddedCassandraWorkingDirectorySetting.value
+      val variables: Map[String, String] = embeddedCassandraPropertiesSetting.value + ("workingDirectory" -> workingDir.getAbsolutePath)
+
+      IOUtils
+        .copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
+        .logErrorOr(sbtLogger(streams.value.log), s"File created in ${workingDir.getAbsolutePath}")
+    },
+    embeddedCassandraStart := {
+      val workingDir: java.io.File       = embeddedCassandraWorkingDirectorySetting.value
+      val variables: Map[String, String] = embeddedCassandraPropertiesSetting.value + ("workingDirectory" -> workingDir.getAbsolutePath)
+      val logger: Logger                 = streams.value.log
+
+      import CassandraUtils._
+
+      (for {
+        _    <- IOUtils.deleteDir(workingDir)
+        yaml <- IOUtils.copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
+        _    <- IOUtils.copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
+        _    <- setCassandraProperties(yaml, workingDir, cassandraConfOutput, cassandraLog4jOutput)
+        _    <- startCassandra(yaml, workingDir, 60.seconds)
+      } yield ()).logErrorOr(sbtLogger(logger), "Cassandra started")
+    }
+  )
+
+  override def projectSettings: Seq[Def.Setting[_]] = embeddedCassandraDefaultSettings
+
+}
