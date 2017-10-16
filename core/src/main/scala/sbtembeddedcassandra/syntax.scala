@@ -16,11 +16,14 @@
 
 package sbtembeddedcassandra
 
+import cats.MonadError
+import cats.syntax.either._
+
 import scala.util._
 
 object syntax {
 
-  type EitherThrowable[T] = Either[Throwable, T]
+  type CResult[T] = Either[Throwable, T]
 
   trait SyntaxLogger {
     def info(msg: String): Unit
@@ -32,7 +35,7 @@ object syntax {
     override def error(msg: String): Unit = System.err.println(msg)
   }
 
-  implicit class EitherOps[T](either: EitherThrowable[T]) {
+  implicit class EitherOps[T](either: CResult[T]) {
 
     def logErrorOr(logger: SyntaxLogger, message: String): Unit =
       either match {
@@ -42,11 +45,16 @@ object syntax {
         case Right(_) => logger.info(message)
       }
 
+    def guarantee(f: => Unit)(implicit ME: MonadError[CResult, Throwable]): CResult[T] =
+      ME.attempt(either).flatMap { e =>
+        Either.catchNonFatal(f).flatMap(_ => e.fold(Left(_), Right(_)))
+      }
+
   }
 
   implicit class OptionOps[T](option: Option[T]) {
 
-    def toEither: EitherThrowable[T] =
+    def toEither: CResult[T] =
       option.map(Right(_)).getOrElse(Left(new NoSuchElementException))
 
   }

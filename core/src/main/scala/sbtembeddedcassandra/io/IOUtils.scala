@@ -30,9 +30,9 @@ object IOUtils {
       workingDir: File,
       inputResource: String,
       variables: Map[String, String],
-      outputFileName: String): EitherThrowable[File] = {
+      outputFileName: String): CResult[File] = {
 
-    def readCassandraFile: EitherThrowable[String] =
+    def readCassandraFile: CResult[String] =
       Either.catchNonFatal {
         scala.io.Source
           .fromInputStream(getClass.getResourceAsStream(inputResource))
@@ -56,7 +56,7 @@ object IOUtils {
     } yield outputFile
   }
 
-  def deleteDir(pathFile: File, recreate: Boolean = true): EitherThrowable[Unit] =
+  def deleteDir(pathFile: File, recreate: Boolean = true): CResult[Unit] =
     Either.catchNonFatal {
       val path: Path = Path(pathFile)
       path.deleteRecursively()
@@ -64,7 +64,7 @@ object IOUtils {
       (): Unit
     }
 
-  def readStatements(file: File): EitherThrowable[List[String]] =
+  def readStatements(file: File): CResult[List[String]] =
     Either
       .catchNonFatal(scala.io.Source.fromFile(file).mkString)
       .map(_.split(";").map(_.trim).filter(_.nonEmpty).toList)

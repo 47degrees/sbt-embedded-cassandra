@@ -29,15 +29,19 @@ trait EmbeddedCassandraDefaultValues {
   val clusterNameProp: String         = "clusterName"
   val listenAddressProp: String       = "listenAddress"
   val nativeTransportPortProp: String = "nativeTransportPort"
+  val storagePortProp: String         = "storagePort"
+  val storagePortSSLProp: String      = "storagePortSSL"
+  val rpcAddressProp: String          = "rpcAddress"
+  val rpcPortProp: String             = "rpcPort"
 
   lazy val defaultProperties: Map[String, String] = Map(
     clusterNameProp         -> "TestCluster",
-    "storagePort"           -> "7000",
-    "storagePortSSL"        -> "7001",
+    storagePortProp         -> "7000",
+    storagePortSSLProp      -> "7001",
     listenAddressProp       -> "127.0.0.1",
     nativeTransportPortProp -> "9042",
-    "rpcAddress"            -> "localhost",
-    "rpcPort"               -> "9160"
+    rpcAddressProp          -> "localhost",
+    rpcPortProp             -> "9160"
   )
 
   lazy val defaultCQLFile: Option[File] = None

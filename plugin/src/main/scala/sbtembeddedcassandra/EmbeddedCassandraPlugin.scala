@@ -64,15 +64,12 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
         _    <- copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
         _    <- setCassandraProperties(yaml, workingDir, cassandraConfOutput, cassandraLog4jOutput)
         _    <- startCassandra(yaml, workingDir, 60.seconds)
-        _ <- statementsFile match {
-          case Some(file) => executeStatements(properties, file)
-          case None       => Right((): Unit)
-        }
+        _    <- statementsFile.map(executeStatements(properties, _)).getOrElse(Right((): Unit))
       } yield ()).logErrorOr(sbtLogger(logger), "Cassandra started")
     }
   )
 
-  private[this] def verifyProperties(variables: Map[String, String]): EitherThrowable[Unit] =
+  private[this] def verifyProperties(variables: Map[String, String]): CResult[Unit] =
     variables.keys.toList.filterNot(defaultProperties.keys.toList.contains(_)) match {
       case Nil => Right((): Unit)
       case missing =>
@@ -84,7 +81,7 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
 
   private[this] def executeStatements(
       variables: Map[String, String],
-      statementsFile: File): EitherThrowable[Unit] =
+      statementsFile: File): CResult[Unit] =
     for {
       clusterName   <- variables.get(clusterNameProp).toEither
       listenAddress <- variables.get(listenAddressProp).toEither
