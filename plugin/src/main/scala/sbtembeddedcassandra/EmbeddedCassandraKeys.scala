@@ -26,15 +26,21 @@ trait EmbeddedCassandraDefaultValues {
 
   lazy val defaultConfigFile: Option[File] = None
 
+  val clusterNameProp: String         = "clusterName"
+  val listenAddressProp: String       = "listenAddress"
+  val nativeTransportPortProp: String = "nativeTransportPort"
+
   lazy val defaultProperties: Map[String, String] = Map(
-    "clusterName"         -> "TestCluster",
-    "storagePort"         -> "7000",
-    "storagePortSSL"      -> "7001",
-    "listenAddress"       -> "127.0.0.1",
-    "nativeTransportPort" -> "9042",
-    "rpcAddress"          -> "localhost",
-    "rpcPort"             -> "9160"
+    clusterNameProp         -> "TestCluster",
+    "storagePort"           -> "7000",
+    "storagePortSSL"        -> "7001",
+    listenAddressProp       -> "127.0.0.1",
+    nativeTransportPortProp -> "9042",
+    "rpcAddress"            -> "localhost",
+    "rpcPort"               -> "9160"
   )
+
+  lazy val defaultCQLFile: Option[File] = None
 
   lazy val defaultWorkingDirectory: String = "target/cassandra"
 
@@ -44,10 +50,6 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
 
   // (Settings keys are ordered alphabetically)
 
-  private[this] lazy val prettyProperties: String = defaultProperties map {
-    case (key, value) => s" * $key ($value)"
-  } mkString "\n"
-
   val embeddedCassandraConfigFileSetting: SettingKey[Option[File]] =
     settingKey[Option[File]](
       s"Defines a custom template config file. Defaults to $defaultConfigFile")
@@ -56,8 +58,16 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
     settingKey[Map[String, String]](
       s"Properties to replace in the template. Available configuration properties and default values:\n $prettyProperties")
 
+  val embeddedCassandraCQLFileSetting: SettingKey[Option[File]] =
+    settingKey[Option[File]](
+      s"Defines a CQL file with statements ended with ';' that will be executed after start the service. Defaults to $defaultCQLFile")
+
   val embeddedCassandraWorkingDirectorySetting: SettingKey[File] =
     settingKey[File](s"Output directory for Cassandra. Defaults to '$defaultWorkingDirectory")
+
+  private[this] lazy val prettyProperties: String = defaultProperties map {
+    case (key, value) => s" * $key ($value)"
+  } mkString "\n"
 }
 
 sealed trait EmbeddedCassandraTaskKeys {

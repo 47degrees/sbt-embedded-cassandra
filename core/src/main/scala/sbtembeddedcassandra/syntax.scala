@@ -20,6 +20,8 @@ import scala.util._
 
 object syntax {
 
+  type EitherThrowable[T] = Either[Throwable, T]
+
   trait SyntaxLogger {
     def info(msg: String): Unit
     def error(msg: String): Unit
@@ -30,7 +32,7 @@ object syntax {
     override def error(msg: String): Unit = System.err.println(msg)
   }
 
-  implicit class EitherOps[T](either: Either[Throwable, T]) {
+  implicit class EitherOps[T](either: EitherThrowable[T]) {
 
     def logErrorOr(logger: SyntaxLogger, message: String): Unit =
       either match {
@@ -39,6 +41,13 @@ object syntax {
           e.printStackTrace()
         case Right(_) => logger.info(message)
       }
+
+  }
+
+  implicit class OptionOps[T](option: Option[T]) {
+
+    def toEither: EitherThrowable[T] =
+      option.map(Right(_)).getOrElse(Left(new NoSuchElementException))
 
   }
 

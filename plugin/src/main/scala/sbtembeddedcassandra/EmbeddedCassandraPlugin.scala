@@ -18,7 +18,6 @@ package sbtembeddedcassandra
 
 import sbt._
 import sbt.Keys._
-import sbt.internal.util.ManagedLogger
 import sbtembeddedcassandra.cassandra.CassandraUtils
 import sbtembeddedcassandra.io.IOUtils
 import sbtembeddedcassandra.syntax._
@@ -44,12 +43,12 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
   lazy val embeddedCassandraDefaultSettings: Seq[Def.Setting[_]] = Seq(
     embeddedCassandraPropertiesSetting := defaultProperties,
     embeddedCassandraConfigFileSetting := defaultConfigFile,
-    embeddedCassandraWorkingDirectorySetting := new File(defaultWorkingDirectory)
+    embeddedCassandraWorkingDirectorySetting := file(defaultWorkingDirectory)
   ) ++ embeddedCassandraKeysDef
 
   lazy val embeddedCassandraKeysDef: Seq[Def.Setting[_]] = Seq(
     embeddedCassandraCreateConfigFile := {
-      val workingDir: java.io.File       = embeddedCassandraWorkingDirectorySetting.value
+      val workingDir: File               = embeddedCassandraWorkingDirectorySetting.value
       val variables: Map[String, String] = embeddedCassandraPropertiesSetting.value + ("workingDirectory" -> workingDir.getAbsolutePath)
 
       IOUtils
@@ -57,21 +56,50 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
         .logErrorOr(sbtLogger(streams.value.log), s"File created in ${workingDir.getAbsolutePath}")
     },
     embeddedCassandraStart := {
-      val workingDir: java.io.File       = embeddedCassandraWorkingDirectorySetting.value
-      val variables: Map[String, String] = embeddedCassandraPropertiesSetting.value + ("workingDirectory" -> workingDir.getAbsolutePath)
-      val logger: Logger                 = streams.value.log
+      val workingDir: File                = embeddedCassandraWorkingDirectorySetting.value
+      val properties: Map[String, String] = embeddedCassandraPropertiesSetting.value
+      val variables: Map[String, String]  = properties + ("workingDirectory" -> workingDir.getAbsolutePath)
+      val statementsFile: Option[File]    = embeddedCassandraCQLFileSetting.value
+      val logger: Logger                  = streams.value.log
 
       import CassandraUtils._
+      import IOUtils._
 
       (for {
-        _    <- IOUtils.deleteDir(workingDir)
-        yaml <- IOUtils.copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
-        _    <- IOUtils.copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
+        _    <- verifyProperties(properties)
+        _    <- deleteDir(workingDir)
+        yaml <- copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
+        _    <- copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
         _    <- setCassandraProperties(yaml, workingDir, cassandraConfOutput, cassandraLog4jOutput)
         _    <- startCassandra(yaml, workingDir, 60.seconds)
+        _ <- statementsFile match {
+          case Some(file) => executeStatements(properties, file)
+          case None       => Right((): Unit)
+        }
       } yield ()).logErrorOr(sbtLogger(logger), "Cassandra started")
     }
   )
+
+  private[this] def verifyProperties(variables: Map[String, String]): EitherThrowable[Unit] =
+    variables.keys.toList.filterNot(defaultProperties.keys.toList.contains(_)) match {
+      case Nil => Right((): Unit)
+      case missing =>
+        Left(
+          new IllegalArgumentException(
+            s"""You need to define these required properties in `embeddedCassandraPropertiesSetting` setting:
+             | - ${missing.mkString(",")}""".stripMargin))
+    }
+
+  private[this] def executeStatements(
+      variables: Map[String, String],
+      statementsFile: File): EitherThrowable[Unit] =
+    for {
+      clusterName   <- variables.get(clusterNameProp).toEither
+      listenAddress <- variables.get(listenAddressProp).toEither
+      nativePort    <- variables.get(nativeTransportPortProp).toEither
+      statements    <- IOUtils.readStatements(statementsFile)
+      _             <- CassandraUtils.executeCQLStatements(clusterName, listenAddress, nativePort, statements)
+    } yield ()
 
   override def projectSettings: Seq[Def.Setting[_]] = embeddedCassandraDefaultSettings
 
