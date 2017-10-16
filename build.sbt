@@ -28,6 +28,7 @@ lazy val plugin = project
 
 lazy val core = project
   .in(file("core"))
+  .settings(sbtPlugin := false)
   .settings(moduleName := "embedded-cassandra-core")
   .settings(scalaMetaSettings: _*)
   .settings(
