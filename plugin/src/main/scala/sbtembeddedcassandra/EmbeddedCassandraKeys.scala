@@ -74,10 +74,6 @@ sealed trait EmbeddedCassandraTaskKeys {
 
   // (Task keys are ordered alphabetically)
 
-  val embeddedCassandraCreateConfigFile: TaskKey[Unit] =
-    taskKey[Unit](
-      "Task to create the Cassandra config file in the working directory. Usually, you don't invoke this directly because it's executed by 'embeddedCassandraStart'")
-
   val embeddedCassandraStart: TaskKey[Unit] = taskKey[Unit]("Task to start Cassandra.")
 
 }

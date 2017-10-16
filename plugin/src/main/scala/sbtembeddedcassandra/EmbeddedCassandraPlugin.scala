@@ -47,14 +47,6 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
   ) ++ embeddedCassandraKeysDef
 
   lazy val embeddedCassandraKeysDef: Seq[Def.Setting[_]] = Seq(
-    embeddedCassandraCreateConfigFile := {
-      val workingDir: File               = embeddedCassandraWorkingDirectorySetting.value
-      val variables: Map[String, String] = embeddedCassandraPropertiesSetting.value + ("workingDirectory" -> workingDir.getAbsolutePath)
-
-      IOUtils
-        .copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
-        .logErrorOr(sbtLogger(streams.value.log), s"File created in ${workingDir.getAbsolutePath}")
-    },
     embeddedCassandraStart := {
       val workingDir: File                = embeddedCassandraWorkingDirectorySetting.value
       val properties: Map[String, String] = embeddedCassandraPropertiesSetting.value
