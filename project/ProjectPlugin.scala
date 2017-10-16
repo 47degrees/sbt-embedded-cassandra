@@ -31,7 +31,7 @@ object ProjectPlugin extends AutoPlugin {
     sbtPlugin := true,
     scalaVersion := scalac.`2.12`,
     scalaOrganization := "org.scala-lang",
-    crossSbtVersions := Seq(sbtV.`0.13`, sbtV.`1.0`),
+    crossSbtVersions := Seq(sbtV.`1.0`),
     crossScalaVersions := Seq(scalac.`2.12`)
   )
 
