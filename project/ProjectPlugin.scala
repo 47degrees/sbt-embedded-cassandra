@@ -13,6 +13,14 @@ object ProjectPlugin extends AutoPlugin {
 
   override def projectSettings: Seq[Def.Setting[_]] = Seq(
     orgProjectName := "sbt-embedded-cassandra",
+    orgGithubSetting := GitHubSettings(
+      organization = "47deg",
+      project = "sbt-embedded-cassandra",
+      organizationName = "47 Degrees",
+      groupId = "com.47deg",
+      organizationHomePage = url("http://47deg.com"),
+      organizationEmail = "hello@47deg.com"
+    ),
     orgScriptTaskListSetting := List(
       orgCheckSettings.asRunnableItem,
       "clean".asRunnableItemFull,

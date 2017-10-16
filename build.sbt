@@ -32,7 +32,8 @@ lazy val core = project
   .settings(scalaMetaSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
-      "com.47deg" %% "org-policies-core" % "0.8.0",
+      %%("org-policies-core"),
+      %("cassandra-driver-core"),
       "org.apache.cassandra" % "cassandra-all" % "3.9"
     )
   )
