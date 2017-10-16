@@ -1,18 +1,18 @@
 # Contributing
 
-Discussion around sbt-embedded-cassandra-plugin happens in the [Gitter channel](https://gitter.im/47deg/sbt-embedded-cassandra-plugin) as well as on
-[GitHub issues](https://github.com/47deg/sbt-embedded-cassandra-plugin/issues) and [pull requests](https://github.com/47deg/sbt-embedded-cassandra-plugin/pulls).
+Discussion around sbt-embedded-cassandra happens in the [Gitter channel](https://gitter.im/47deg/sbt-embedded-cassandra) as well as on
+[GitHub issues](https://github.com/47deg/sbt-embedded-cassandra/issues) and [pull requests](https://github.com/47deg/sbt-embedded-cassandra/pulls).
 
 Feel free to open an issue if you notice a bug, have an idea for a feature, or have a question about
 the code. Pull requests are also welcome.
 
-People are expected to follow the [Typelevel Code of Conduct](http://typelevel.org/conduct.html) when discussing sbt-embedded-cassandra-plugin on the Github page, Gitter channel, or other venues.
+People are expected to follow the [Typelevel Code of Conduct](http://typelevel.org/conduct.html) when discussing sbt-embedded-cassandra on the Github page, Gitter channel, or other venues.
 
 If you are being harassed, please contact one of [us](AUTHORS.md#maintainers) immediately so that we can support you. In case you cannot get in touch with us please write an email to [47 Degrees](mailto:hello@47deg.com).
 
 ## How can I help?
 
-sbt-embedded-cassandra-plugin follows a standard [fork and pull](https://help.github.com/articles/using-pull-requests/) model for contributions via GitHub pull requests.
+sbt-embedded-cassandra follows a standard [fork and pull](https://help.github.com/articles/using-pull-requests/) model for contributions via GitHub pull requests.
 
 The process is simple:
 
