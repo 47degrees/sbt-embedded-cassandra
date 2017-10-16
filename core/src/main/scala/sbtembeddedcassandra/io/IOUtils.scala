@@ -19,6 +19,7 @@ package sbtembeddedcassandra.io
 import java.io.File
 
 import cats.syntax.either._
+import sbtembeddedcassandra.syntax._
 import sbtorgpolicies.io.ReplaceTextEngine
 
 import scala.reflect.io.Path
@@ -29,9 +30,9 @@ object IOUtils {
       workingDir: File,
       inputResource: String,
       variables: Map[String, String],
-      outputFileName: String): Either[Throwable, File] = {
+      outputFileName: String): CResult[File] = {
 
-    def readCassandraFile: Either[Throwable, String] =
+    def readCassandraFile: CResult[String] =
       Either.catchNonFatal {
         scala.io.Source
           .fromInputStream(getClass.getResourceAsStream(inputResource))
@@ -55,7 +56,7 @@ object IOUtils {
     } yield outputFile
   }
 
-  def deleteDir(pathFile: File, recreate: Boolean = true): Either[Throwable, Unit] =
+  def deleteDir(pathFile: File, recreate: Boolean = true): CResult[Unit] =
     Either.catchNonFatal {
       val path: Path = Path(pathFile)
       path.deleteRecursively()
@@ -63,10 +64,9 @@ object IOUtils {
       (): Unit
     }
 
-  def readStatements(pathDir: String): Either[Throwable, List[String]] =
+  def readStatements(file: File): CResult[List[String]] =
     Either
-      .catchNonFatal(
-        scala.io.Source.fromInputStream(getClass.getResourceAsStream(pathDir)).mkString)
-      .map(_.split(";").filter(_.trim.nonEmpty).toList)
+      .catchNonFatal(scala.io.Source.fromFile(file).mkString)
+      .map(_.split(";").map(_.trim).filter(_.nonEmpty).toList)
 
 }

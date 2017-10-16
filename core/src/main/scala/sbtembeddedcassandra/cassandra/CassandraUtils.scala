@@ -18,10 +18,15 @@ package sbtembeddedcassandra.cassandra
 
 import java.io.File
 
+import cats.instances.either._
+import cats.instances.list._
 import cats.syntax.either._
+import cats.syntax.traverse._
+import com.datastax.driver.core.{Cluster, Session}
 import org.apache.cassandra.config.DatabaseDescriptor
 import org.apache.cassandra.db.commitlog.CommitLog
 import org.apache.cassandra.service.CassandraDaemon
+import sbtembeddedcassandra.syntax._
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -30,38 +35,44 @@ import scala.util.control.NonFatal
 
 object CassandraUtils {
 
-  lazy val eitherDaemon: Either[Throwable, CassandraDaemon] =
+  lazy val eitherDaemon: CResult[CassandraDaemon] =
     Either.catchNonFatal(new CassandraDaemon())
 
   def setCassandraProperties(
       yaml: File,
       workingDir: File,
       confFileName: String,
-      log4jFileName: String): Either[Throwable, Unit] =
-    Either.catchNonFatal {
-      System.setProperty("cassandra.config", s"file:${yaml.getAbsolutePath}")
-      System.setProperty("cassandra-foreground", "true")
-      System.setProperty("cassandra.native.epoll.enabled", "false")
-      System.setProperty("cassandra.unsafesystem", "true")
-      System.setProperty("cassandra.storagedir", new File(workingDir, "storage").getAbsolutePath)
-      if (System.getProperty("log4j.configuration") == null) {
-        System.setProperty(
-          "log4j.configuration",
-          s"file:${new File(workingDir, log4jFileName).getAbsolutePath}")
-      }
+      log4jFileName: String): CResult[List[Option[String]]] = {
+
+    def setProperty(nameAndValue: (String, String)): CResult[Option[String]] =
+      Either.catchNonFatal(System.setProperty(nameAndValue._1, nameAndValue._2)).map(Option(_))
+
+    val properties = List(
+      ("cassandra.config", s"file:${yaml.getAbsolutePath}"),
+      ("cassandra-foreground", "true"),
+      ("cassandra.native.epoll.enabled", "false"),
+      ("cassandra.unsafesystem", "true"),
+      ("cassandra.storagedir", new File(workingDir, "storage").getAbsolutePath)
+    )
+
+    val log4jProperty = Option(System.getProperty("log4j.configuration")).map(_ => Nil).getOrElse {
+      List(("log4j.configuration", s"file:${new File(workingDir, log4jFileName).getAbsolutePath}"))
     }
 
-  def startCassandra(yaml: File, workingDir: File, timeout: Duration): Either[Throwable, Unit] = {
+    (properties ++ log4jProperty).traverse(setProperty)
+  }
 
-    def init: Either[Throwable, Unit] =
+  def startCassandra(yaml: File, workingDir: File, timeout: Duration): CResult[Unit] = {
+
+    def init: CResult[Int] =
       Either.catchNonFatal {
         DatabaseDescriptor.forceStaticInitialization()
         CommitLog.instance.resetUnsafe(true)
       }
 
-    def startCassandra(daemon: CassandraDaemon): Either[Throwable, Unit] = {
+    def startCassandra(daemon: CassandraDaemon): CResult[Unit] = {
       import scala.concurrent.ExecutionContext.Implicits.global
-      val future: Future[Either[Throwable, Unit]] =
+      val future: Future[CResult[Unit]] =
         Future(daemon.activate()).map(Right(_)).recover {
           case e => Left(e)
         }
@@ -77,6 +88,35 @@ object CassandraUtils {
       daemon <- eitherDaemon
       _      <- startCassandra(daemon)
     } yield ()
+  }
+
+  def executeCQLStatements(
+      clusterName: String,
+      listenAddress: String,
+      nativePort: String,
+      statements: List[String]): CResult[Unit] = {
+
+    def buildCluster(): CResult[Cluster] = Either.catchNonFatal {
+      new Cluster.Builder()
+        .withClusterName(clusterName)
+        .addContactPoint(listenAddress)
+        .withPort(nativePort.toInt)
+        .build()
+    }
+
+    def executeStatement(session: Session, statement: String): CResult[Unit] =
+      Either.catchNonFatal(session.execute(statement)).map(_ => (): Unit)
+
+    def executeStatements(cluster: Cluster): CResult[Unit] =
+      for {
+        session <- Either.catchNonFatal(cluster.connect())
+        _       <- statements.traverse(executeStatement(session, _)).map(_ => (): Unit)
+        _       <- Either.catchNonFatal(session.close())
+      } yield ()
+
+    buildCluster() flatMap { cluster =>
+      executeStatements(cluster).guarantee(cluster.close())
+    }
   }
 
 }
