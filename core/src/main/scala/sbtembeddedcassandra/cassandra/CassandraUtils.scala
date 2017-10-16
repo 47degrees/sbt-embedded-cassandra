@@ -107,10 +107,8 @@ object CassandraUtils {
     buildCluster() flatMap { cluster =>
       val tryExecuteStatements: EitherThrowable[Unit] = for {
         session <- connectCluster(cluster)
-        _ <- statements
-          .traverse[EitherThrowable, Unit](executeStatement(session, _))
-          .map(_ => (): Unit)
-        _ <- Either.catchNonFatal(session.close())
+        _       <- statements.traverse(executeStatement(session, _)).map(_ => (): Unit)
+        _       <- Either.catchNonFatal(session.close())
       } yield ()
       Either.catchNonFatal(cluster.close())
       tryExecuteStatements
