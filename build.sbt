@@ -7,6 +7,7 @@ pgpSecretRing := file(s"$gpgFolder/secring.gpg")
 lazy val root = project
   .in(file("."))
   .dependsOn(core)
+  .aggregate(core)
   .settings(name := "sbt-embedded-cassandra")
   .settings(sbtPlugin := true)
   .settings(scalacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-unchecked"))
