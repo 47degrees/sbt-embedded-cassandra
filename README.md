@@ -1,7 +1,7 @@
 
 [comment]: # (Start Badges)
 
-[![Build Status](https://travis-ci.org/47deg/sbt-embedded-cassandra.svg?branch=master)](https://travis-ci.org/47deg/sbt-embedded-cassandra) [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.3-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra-plugin_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47deg/sbt-embedded-cassandra/master/LICENSE) [![Join the chat at https://gitter.im/47deg/sbt-embedded-cassandra](https://badges.gitter.im/47deg/sbt-embedded-cassandra.svg)](https://gitter.im/47deg/sbt-embedded-cassandra?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![GitHub Issues](https://img.shields.io/github/issues/47deg/sbt-embedded-cassandra.svg)](https://github.com/47deg/sbt-embedded-cassandra/issues)
+[![Build Status](https://travis-ci.org/47deg/sbt-embedded-cassandra.svg?branch=master)](https://travis-ci.org/47deg/sbt-embedded-cassandra) [![codecov.io](http://codecov.io/github/47deg/sbt-embedded-cassandra/coverage.svg?branch=master)](http://codecov.io/github/47deg/sbt-embedded-cassandra?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.4-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47deg/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47deg/sbt-embedded-cassandra.svg)](https://github.com/47deg/sbt-embedded-cassandra/issues)
 
 [comment]: # (End Badges)
 
@@ -18,7 +18,7 @@ The goal of this project is to provide a way to add integration tests using Cass
 [comment]: # (Start Replace)
 
 ```scala
-addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.3")
+addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.4")
 ```
 
 [comment]: # (End Replace)
