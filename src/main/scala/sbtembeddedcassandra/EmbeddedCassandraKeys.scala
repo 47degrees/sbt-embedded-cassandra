@@ -64,7 +64,7 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
 
   val embeddedCassandraPropertiesSetting: SettingKey[Map[String, String]] =
     settingKey[Map[String, String]](
-      s"Properties to replace in the template. Available configuration properties and default values:\n $prettyProperties")
+      s"Properties to replace in the `cassandra.yml` template. Available configuration properties and default values:\n $prettyProperties")
 
   val embeddedCassandraWorkingDirectorySetting: SettingKey[File] =
     settingKey[File](s"Output directory for Cassandra. Defaults to '$defaultWorkingDirectory")

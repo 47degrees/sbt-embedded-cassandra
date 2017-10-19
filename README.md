@@ -29,11 +29,11 @@ addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.3")
 > embeddedCassandraStart
 ```
 
-## Customize
+## Customization
 
-* `embeddedCassandraWorkingDirectorySetting: File`: Output directory for Cassandra.
+* `embeddedCassandraWorkingDirectorySetting: File`: Output directory for Cassandra. `target/Cassandra` by default.
 
-* `embeddedCassandraPropertiesSetting: Map[String, String]`: Properties to replace in the template. Internally, the plugin will add a new property to the map named `workingDirectory` with the value of the previous setting.
+* `embeddedCassandraPropertiesSetting: Map[String, String]`: Properties to replace in the `cassandra.yml` template. Internally, the plugin will add a new property to the map named `workingDirectory` with the value of the previous setting.
 
 * `embeddedCassandraConfigFileSetting: Option[File]`: Defines a custom template config file, `None` by default. When this setting is `None` it will use the following [template from the resources](core/src/main/resources/basic-cassandra-conf.yml) 
 
