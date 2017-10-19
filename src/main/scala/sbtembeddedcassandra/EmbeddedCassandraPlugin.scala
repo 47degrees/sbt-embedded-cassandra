@@ -58,7 +58,6 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
       import IOUtils._
 
       (for {
-        _    <- verifyProperties(properties)
         _    <- deleteDir(workingDir)
         yaml <- copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
         _    <- copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
@@ -68,16 +67,6 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
       } yield ()).logErrorOr(sbtLogger(logger), "Cassandra started")
     }
   )
-
-  private[this] def verifyProperties(variables: Map[String, String]): CResult[Unit] =
-    variables.keys.toList.filterNot(defaultProperties.keys.toList.contains(_)) match {
-      case Nil => Right((): Unit)
-      case missing =>
-        Left(
-          new IllegalArgumentException(
-            s"""You need to define these required properties in `embeddedCassandraPropertiesSetting` setting:
-             | - ${missing.mkString(",")}""".stripMargin))
-    }
 
   private[this] def executeStatements(
       variables: Map[String, String],

@@ -58,13 +58,13 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
     settingKey[Option[File]](
       s"Defines a custom template config file. Defaults to $defaultConfigFile")
 
-  val embeddedCassandraPropertiesSetting: SettingKey[Map[String, String]] =
-    settingKey[Map[String, String]](
-      s"Properties to replace in the template. Available configuration properties and default values:\n $prettyProperties")
-
   val embeddedCassandraCQLFileSetting: SettingKey[Option[File]] =
     settingKey[Option[File]](
       s"Defines a CQL file with statements ended with ';' that will be executed after start the service. Defaults to $defaultCQLFile")
+
+  val embeddedCassandraPropertiesSetting: SettingKey[Map[String, String]] =
+    settingKey[Map[String, String]](
+      s"Properties to replace in the `cassandra.yml` template. Available configuration properties and default values:\n $prettyProperties")
 
   val embeddedCassandraWorkingDirectorySetting: SettingKey[File] =
     settingKey[File](s"Output directory for Cassandra. Defaults to '$defaultWorkingDirectory")
@@ -78,6 +78,6 @@ sealed trait EmbeddedCassandraTaskKeys {
 
   // (Task keys are ordered alphabetically)
 
-  val embeddedCassandraStart: TaskKey[Unit] = taskKey[Unit]("Task to start Cassandra.")
+  val embeddedCassandraStart: TaskKey[Unit] = taskKey[Unit]("Starts an embedded Cassandra instance.")
 
 }

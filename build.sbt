@@ -6,22 +6,15 @@ pgpSecretRing := file(s"$gpgFolder/secring.gpg")
 
 lazy val root = project
   .in(file("."))
-  .settings(name := "sbt-embedded-cassandra-plugin")
-  .settings(noPublishSettings)
-  .dependsOn(plugin, core)
-  .aggregate(plugin, core)
-
-lazy val plugin = project
-  .in(file("plugin"))
   .dependsOn(core)
-  .settings(moduleName := "sbt-embedded-cassandra")
+  .settings(name := "sbt-embedded-cassandra")
   .settings(sbtPlugin := true)
   .settings(scalacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-unchecked"))
   .settings(
     orgBadgeListSetting := List(
       TravisBadge.apply,
       CodecovBadge.apply,
-      ScalaLangBadge.apply,
+      MavenCentralBadge.apply,
       LicenseBadge.apply,
       GitHubIssuesBadge.apply
     ))
@@ -29,7 +22,7 @@ lazy val plugin = project
 lazy val core = project
   .in(file("core"))
   .settings(sbtPlugin := false)
-  .settings(moduleName := "embedded-cassandra-core")
+  .settings(name := "embedded-cassandra-core")
   .settings(scalaMetaSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
