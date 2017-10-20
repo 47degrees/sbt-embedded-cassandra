@@ -17,6 +17,7 @@ object ProjectPlugin extends AutoPlugin {
     lazy val pluginSettings: Seq[Def.Setting[_]] = Seq(
       moduleName := "sbt-embedded-cassandra",
       sbtPlugin := true,
+      scalaVersion := scalac.`2.12`,
       crossScalaVersions := Seq(scalac.`2.12`),
       crossSbtVersions := Seq(sbtV.`0.13`, sbtV.`1.0`),
       scalacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-unchecked"),
@@ -60,7 +61,6 @@ object ProjectPlugin extends AutoPlugin {
       organizationHomePage = url("http://47deg.com"),
       organizationEmail = "hello@47deg.com"
     ),
-    scalaVersion := scalac.`2.12`,
     orgScriptTaskListSetting := List(
       orgCheckSettings.asRunnableItem,
       "clean".asRunnableItemFull,
