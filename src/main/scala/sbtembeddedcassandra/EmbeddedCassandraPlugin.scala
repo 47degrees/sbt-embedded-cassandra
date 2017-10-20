@@ -18,6 +18,7 @@ package sbtembeddedcassandra
 
 import sbt._
 import sbt.Keys._
+import cats.syntax.either._
 import sbtembeddedcassandra.cassandra.CassandraUtils
 import sbtembeddedcassandra.io.IOUtils
 import sbtembeddedcassandra.syntax._
@@ -36,7 +37,7 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
   private[this] val cassandraLog4jOutput = "log4j.properties"
 
   def sbtLogger(logger: Logger): SyntaxLogger = new SyntaxLogger {
-    override def error(msg: String): Unit = logger.err(msg)
+    override def error(msg: String): Unit = logger.error(msg)
     override def info(msg: String): Unit  = logger.info(msg)
   }
 

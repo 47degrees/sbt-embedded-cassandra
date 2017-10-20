@@ -78,6 +78,7 @@ sealed trait EmbeddedCassandraTaskKeys {
 
   // (Task keys are ordered alphabetically)
 
-  val embeddedCassandraStart: TaskKey[Unit] = taskKey[Unit]("Starts an embedded Cassandra instance.")
+  val embeddedCassandraStart: TaskKey[Unit] =
+    taskKey[Unit]("Starts an embedded Cassandra instance.")
 
 }
