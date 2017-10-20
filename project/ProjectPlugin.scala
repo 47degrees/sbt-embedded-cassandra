@@ -42,7 +42,7 @@ object ProjectPlugin extends AutoPlugin {
         }
       },
       libraryDependencies ++= Seq(
-        %%("org-policies-core"),
+        %%("org-policies-core") exclude ("com.dwijnand", "sbt-compat"),
         %("cassandra-driver-core"),
         "org.apache.cassandra" % "cassandra-all" % "3.9"
       ),
