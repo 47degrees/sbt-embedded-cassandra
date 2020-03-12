@@ -1,7 +1,7 @@
 
 [comment]: # (Start Badges)
 
-[![Build Status](https://travis-ci.org/47deg/sbt-embedded-cassandra.svg?branch=master)](https://travis-ci.org/47deg/sbt-embedded-cassandra) [![codecov.io](http://codecov.io/github/47deg/sbt-embedded-cassandra/coverage.svg?branch=master)](http://codecov.io/github/47deg/sbt-embedded-cassandra?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.6-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47deg/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47deg/sbt-embedded-cassandra.svg)](https://github.com/47deg/sbt-embedded-cassandra/issues)
+[![Build Status](https://travis-ci.org/47degrees/sbt-embedded-cassandra.svg?branch=master)](https://travis-ci.org/47degrees/sbt-embedded-cassandra) [![codecov.io](http://codecov.io/github/47degrees/sbt-embedded-cassandra/coverage.svg?branch=master)](http://codecov.io/github/47degrees/sbt-embedded-cassandra?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.6-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47degrees/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47degrees/sbt-embedded-cassandra.svg)](https://github.com/47degrees/sbt-embedded-cassandra/issues)
 
 [comment]: # (End Badges)
 
@@ -41,7 +41,7 @@ addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.6")
 
 ## Supported Cassandra version
 
-Currently, the plugin uses the version `3.9` of [`cassandra-all`](http://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all) library. Take a look to the [issues](https://github.com/47deg/sbt-embedded-cassandra/issues) to stay informed about latest improvements and limitations. 
+Currently, the plugin uses the version `3.9` of [`cassandra-all`](http://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all) library. Take a look to the [issues](https://github.com/47degrees/sbt-embedded-cassandra/issues) to stay informed about latest improvements and limitations. 
 
 ## sbt-embedded-cassandra in the wild not found
 
