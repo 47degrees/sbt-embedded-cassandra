@@ -1,16 +1,15 @@
 language: scala
-
 jdk:
-- openjdk8
-
+  - openjdk8
+dist: xenial
 matrix:
   include:
-    - scala: 2.12.3
+    - scala: 2.12.10
       env:
-        - SBT_VERSION=1.0.2
-    - scala: 2.10.6
+        - SBT_VERSION=1.3.8
+    - scala: 2.10.7
       env:
-        - SBT_VERSION=0.13.16
+        - SBT_VERSION=0.13.18
 
 before_cache:
 - du -h -d 1 $HOME/.ivy2/
@@ -32,9 +31,9 @@ cache:
 
 before_install:
 - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
-    openssl aes-256-cbc -K $encrypted_398281636a6f_key -iv $encrypted_398281636a6f_iv -in secring.gpg.enc -out secring.gpg -d;
+    openssl aes-256-cbc -K $encrypted_398281636a6f_key -iv $encrypted_398281636a6f_iv -in secret_key.asc.enc -out secret_key.asc -d;
+    gpg --import --batch --passphrase "$PGP_PASSPHRASE" secret_key.asc;
   fi
-- export PATH=${PATH}:./vendor/bundle
 
 script:
 - sbt ^^$SBT_VERSION orgScriptCI

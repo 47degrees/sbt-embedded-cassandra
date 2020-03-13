@@ -33,7 +33,7 @@ object ProjectPlugin extends AutoPlugin {
     lazy val coreSettings: Seq[Def.Setting[_]] = Seq(
       moduleName := "embedded-cassandra-core",
       sbtPlugin := false,
-      resolvers += Resolver.typesafeIvyRepo("releases"),
+      resolvers += Resolver.typesafeIvyRepo("releases").withName("typesafe-alt-ivy-releases"),
       crossScalaVersions := Seq(scalac.`2.10`, scalac.`2.12`),
       scalaVersion := {
         (sbtBinaryVersion in pluginCrossBuild).value match {
@@ -42,9 +42,9 @@ object ProjectPlugin extends AutoPlugin {
         }
       },
       libraryDependencies ++= Seq(
-        %%("org-policies-core") exclude ("com.dwijnand", "sbt-compat"),
+        %%("org-policies-core"),
         %("cassandra-driver-core"),
-        "org.apache.cassandra" % "cassandra-all" % "3.9"
+        "org.apache.cassandra" % "cassandra-all" % "3.11.6"
       ),
     )
 
