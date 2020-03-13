@@ -18,8 +18,6 @@ object ProjectPlugin extends AutoPlugin {
       moduleName := "sbt-embedded-cassandra",
       sbtPlugin := true,
       scalaVersion := scalac.`2.12`,
-      crossScalaVersions := Seq(scalac.`2.12`),
-      crossSbtVersions := Seq(sbtV.`0.13`, sbtV.`1.0`),
       scalacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-unchecked"),
       orgBadgeListSetting := List(
         TravisBadge.apply,
@@ -34,13 +32,7 @@ object ProjectPlugin extends AutoPlugin {
       moduleName := "embedded-cassandra-core",
       sbtPlugin := false,
       resolvers += Resolver.typesafeIvyRepo("releases").withName("typesafe-alt-ivy-releases"),
-      crossScalaVersions := Seq(scalac.`2.10`, scalac.`2.12`),
-      scalaVersion := {
-        (sbtBinaryVersion in pluginCrossBuild).value match {
-          case "0.13" => scalac.`2.10`
-          case "1.0"  => scalac.`2.12`
-        }
-      },
+      scalaVersion := scalac.`2.12`,
       libraryDependencies ++= Seq(
         %%("org-policies-core"),
         %("cassandra-driver-core"),
