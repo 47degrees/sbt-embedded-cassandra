@@ -1,7 +1,7 @@
 # Contributing
 
 Discussion around sbt-embedded-cassandra happens in the [Gitter channel](https://gitter.im/47deg/sbt-embedded-cassandra) as well as on
-[GitHub issues](https://github.com/47deg/sbt-embedded-cassandra/issues) and [pull requests](https://github.com/47deg/sbt-embedded-cassandra/pulls).
+[GitHub issues](https://github.com/47degrees/sbt-embedded-cassandra/issues) and [pull requests](https://github.com/47degrees/sbt-embedded-cassandra/pulls).
 
 Feel free to open an issue if you notice a bug, have an idea for a feature, or have a question about
 the code. Pull requests are also welcome.

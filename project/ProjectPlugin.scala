@@ -54,7 +54,7 @@ object ProjectPlugin extends AutoPlugin {
     name := "sbt-embedded-cassandra",
     orgProjectName := "sbt-embedded-cassandra",
     orgGithubSetting := GitHubSettings(
-      organization = "47deg",
+      organization = "47degrees",
       project = "sbt-embedded-cassandra",
       organizationName = "47 Degrees",
       groupId = "com.47deg",
