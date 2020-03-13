@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 47 Degrees, LLC. <http://www.47deg.com>
+ * Copyright 2017-2020 47 Degrees, LLC. <http://www.47deg.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,15 +56,18 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
 
   val embeddedCassandraConfigFileSetting: SettingKey[Option[File]] =
     settingKey[Option[File]](
-      s"Defines a custom template config file. Defaults to $defaultConfigFile")
+      s"Defines a custom template config file. Defaults to $defaultConfigFile"
+    )
 
   val embeddedCassandraCQLFileSetting: SettingKey[Option[File]] =
     settingKey[Option[File]](
-      s"Defines a CQL file with statements ended with ';' that will be executed after start the service. Defaults to $defaultCQLFile")
+      s"Defines a CQL file with statements ended with ';' that will be executed after start the service. Defaults to $defaultCQLFile"
+    )
 
   val embeddedCassandraPropertiesSetting: SettingKey[Map[String, String]] =
     settingKey[Map[String, String]](
-      s"Properties to replace in the `cassandra.yml` template. Available configuration properties and default values:\n $prettyProperties")
+      s"Properties to replace in the `cassandra.yml` template. Available configuration properties and default values:\n $prettyProperties"
+    )
 
   val embeddedCassandraWorkingDirectorySetting: SettingKey[File] =
     settingKey[File](s"Output directory for Cassandra. Defaults to '$defaultWorkingDirectory")

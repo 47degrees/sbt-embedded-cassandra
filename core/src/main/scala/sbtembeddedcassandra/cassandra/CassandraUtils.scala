@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 47 Degrees, LLC. <http://www.47deg.com>
+ * Copyright 2017-2020 47 Degrees, LLC. <http://www.47deg.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ object CassandraUtils {
       yaml: File,
       workingDir: File,
       confFileName: String,
-      log4jFileName: String): CResult[List[Option[String]]] = {
+      log4jFileName: String
+  ): CResult[List[Option[String]]] = {
 
     def setProperty(nameAndValue: (String, String)): CResult[Option[String]] =
       Either.catchNonFatal(System.setProperty(nameAndValue._1, nameAndValue._2)).map(Option(_))
@@ -66,7 +67,7 @@ object CassandraUtils {
 
     def init: CResult[Int] =
       Either.catchNonFatal {
-        DatabaseDescriptor.forceStaticInitialization()
+        DatabaseDescriptor.daemonInitialization()
         CommitLog.instance.resetUnsafe(true)
       }
 
@@ -94,7 +95,8 @@ object CassandraUtils {
       clusterName: String,
       listenAddress: String,
       nativePort: String,
-      statements: List[String]): CResult[Unit] = {
+      statements: List[String]
+  ): CResult[Unit] = {
 
     def buildCluster(): CResult[Cluster] = Either.catchNonFatal {
       new Cluster.Builder()
