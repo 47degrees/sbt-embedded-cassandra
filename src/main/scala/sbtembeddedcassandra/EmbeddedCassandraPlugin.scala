@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 47 Degrees, LLC. <http://www.47deg.com>
+ * Copyright 2017-2020 47 Degrees, LLC. <http://www.47deg.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +71,8 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
 
   private[this] def executeStatements(
       variables: Map[String, String],
-      statementsFile: File): CResult[Unit] =
+      statementsFile: File
+  ): CResult[Unit] =
     for {
       clusterName   <- variables.get(clusterNameProp).toEither
       listenAddress <- variables.get(listenAddressProp).toEither
