@@ -9,3 +9,5 @@ lazy val root = project
 lazy val core = project
   .in(file("core"))
   .settings(coreSettings: _*)
+
+addCommandAlias("ci-test", "scalafmtCheck; scalafmtSbtCheck; test")
