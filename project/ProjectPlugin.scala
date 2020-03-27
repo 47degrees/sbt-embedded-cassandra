@@ -39,7 +39,7 @@ object ProjectPlugin extends AutoPlugin {
         %%("org-policies-core"),
         %("cassandra-driver-core"),
         "org.apache.cassandra" % "cassandra-all" % "3.11.6"
-      ),
+      )
     )
 
   }
