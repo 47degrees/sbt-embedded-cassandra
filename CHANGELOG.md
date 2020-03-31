@@ -7,7 +7,6 @@
 **Merged pull requests:**
 
 - Upgrading dependencies [\#18](https://github.com/47degrees/sbt-embedded-cassandra/pull/18) ([franciscodr](https://github.com/franciscodr))
-- Migrates from 47deg to 47degrees GH organization [\#17](https://github.com/47degrees/sbt-embedded-cassandra/pull/17) ([franciscodr](https://github.com/franciscodr))
 
 ## [v0.0.6](https://github.com/47degrees/sbt-embedded-cassandra/tree/v0.0.6) (2018-01-04)
 
@@ -41,6 +40,7 @@
 
 **Merged pull requests:**
 
+- Migrates from 47deg to 47degrees GH organization [\#17](https://github.com/47degrees/sbt-embedded-cassandra/pull/17) ([franciscodr](https://github.com/franciscodr))
 - Updates the README and build, also upgrades sbt-org-policies [\#8](https://github.com/47degrees/sbt-embedded-cassandra/pull/8) ([fedefernandez](https://github.com/fedefernandez))
 
 ## [v0.0.3](https://github.com/47degrees/sbt-embedded-cassandra/tree/v0.0.3) (2017-10-16)
