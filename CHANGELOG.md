@@ -15,7 +15,6 @@
 
 **Merged pull requests:**
 
-- Drop cross SBT/Scala support [\#19](https://github.com/47degrees/sbt-embedded-cassandra/pull/19) ([fedefernandez](https://github.com/fedefernandez))
 - Release 0.0.6 [\#14](https://github.com/47degrees/sbt-embedded-cassandra/pull/14) ([AdrianRaFo](https://github.com/AdrianRaFo))
 - Upgrades sbt-org-policies [\#13](https://github.com/47degrees/sbt-embedded-cassandra/pull/13) ([fedefernandez](https://github.com/fedefernandez))
 
@@ -29,6 +28,7 @@
 
 **Merged pull requests:**
 
+- Drop cross SBT/Scala support [\#19](https://github.com/47degrees/sbt-embedded-cassandra/pull/19) ([fedefernandez](https://github.com/fedefernandez))
 - sbt-embedded-cassandra cross versioned to sbt \[0.13.16, 1.0.2\] [\#12](https://github.com/47degrees/sbt-embedded-cassandra/pull/12) ([juanpedromoreno](https://github.com/juanpedromoreno))
 - Adds the aggregate for publishing the core lib [\#10](https://github.com/47degrees/sbt-embedded-cassandra/pull/10) ([fedefernandez](https://github.com/fedefernandez))
 
