@@ -15,6 +15,7 @@
 
 **Merged pull requests:**
 
+- Drop cross SBT/Scala support [\#19](https://github.com/47degrees/sbt-embedded-cassandra/pull/19) ([fedefernandez](https://github.com/fedefernandez))
 - Release 0.0.6 [\#14](https://github.com/47degrees/sbt-embedded-cassandra/pull/14) ([AdrianRaFo](https://github.com/AdrianRaFo))
 - Upgrades sbt-org-policies [\#13](https://github.com/47degrees/sbt-embedded-cassandra/pull/13) ([fedefernandez](https://github.com/fedefernandez))
 
