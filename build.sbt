@@ -11,3 +11,4 @@ lazy val core = project
   .settings(coreSettings: _*)
 
 addCommandAlias("ci-test", "scalafmtCheck; scalafmtSbtCheck; test")
+addCommandAlias("ci-docs", "compile")
