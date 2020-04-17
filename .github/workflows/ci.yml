@@ -30,6 +30,10 @@ jobs:
         if: env.REQUIRES_JEKYLL_CI != null
         run: |
           gem install jekyll -v 4
+      - name: Set up codecov
+        run: |
+          curl -s https://codecov.io/bash > .codecov
+          chmod +x .codecov
       - name: Setup Scala
         uses: olafurpg/setup-scala@v7
       - name: Cache dependencies
@@ -46,3 +50,6 @@ jobs:
           restore-keys: ${{ runner.os }}-sbt-
       - name: Run checks
         run: sbt ci-test
+      - name: Upload codecov reports
+        run: |
+          ./.codecov -X gcov

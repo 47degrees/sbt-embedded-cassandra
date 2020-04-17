@@ -116,9 +116,7 @@ object CassandraUtils {
         _       <- Either.catchNonFatal(session.close())
       } yield ()
 
-    buildCluster() flatMap { cluster =>
-      executeStatements(cluster).guarantee(cluster.close())
-    }
+    buildCluster() flatMap { cluster => executeStatements(cluster).guarantee(cluster.close()) }
   }
 
 }
