@@ -51,9 +51,10 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
     embeddedCassandraStart := {
       val workingDir: File                = embeddedCassandraWorkingDirectorySetting.value
       val properties: Map[String, String] = embeddedCassandraPropertiesSetting.value
-      val variables: Map[String, String]  = properties + ("workingDirectory" -> workingDir.getAbsolutePath)
-      val statementsFile: Option[File]    = embeddedCassandraCQLFileSetting.value
-      val logger: Logger                  = streams.value.log
+      val variables: Map[String, String] =
+        properties + ("workingDirectory" -> workingDir.getAbsolutePath)
+      val statementsFile: Option[File] = embeddedCassandraCQLFileSetting.value
+      val logger: Logger               = streams.value.log
 
       import CassandraUtils._
       import IOUtils._
