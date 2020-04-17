@@ -1,11 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/47degrees/sbt-embedded-cassandra/tree/HEAD)
+## [v0.0.7](https://github.com/47degrees/sbt-embedded-cassandra/tree/v0.0.7) (2020-04-17)
 
-[Full Changelog](https://github.com/47degrees/sbt-embedded-cassandra/compare/v0.0.6...HEAD)
+[Full Changelog](https://github.com/47degrees/sbt-embedded-cassandra/compare/v0.0.6...v0.0.7)
 
 **Merged pull requests:**
 
+- Build Improvements [\#38](https://github.com/47degrees/sbt-embedded-cassandra/pull/38) ([juanpedromoreno](https://github.com/juanpedromoreno))
 - Upgrading dependencies [\#18](https://github.com/47degrees/sbt-embedded-cassandra/pull/18) ([franciscodr](https://github.com/franciscodr))
 - Migrates from 47deg to 47degrees GH organization [\#17](https://github.com/47degrees/sbt-embedded-cassandra/pull/17) ([franciscodr](https://github.com/franciscodr))
 
