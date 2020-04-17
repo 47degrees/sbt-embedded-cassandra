@@ -5,7 +5,7 @@ addCommandAlias(
   "ci-test",
   "+scalafmtCheck; +scalafmtSbtCheck; +coverage; +test; +coverageReport; +coverageAggregate"
 )
-addCommandAlias("ci-docs", "+docs/mdoc; headerCreateAll")
+addCommandAlias("ci-docs", "project-docs/mdoc; headerCreateAll")
 
 lazy val plugin = project
   .in(file("."))
