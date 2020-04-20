@@ -31,6 +31,7 @@ jobs:
         run: |
           gem install jekyll -v 4
       - name: Set up codecov
+        if: env.REQUIRES_CODECOV != null
         run: |
           curl -s https://codecov.io/bash > .codecov
           chmod +x .codecov
@@ -51,5 +52,6 @@ jobs:
       - name: Run checks
         run: sbt ci-test
       - name: Upload codecov reports
+        if: env.REQUIRES_CODECOV != null
         run: |
           ./.codecov -X gcov
