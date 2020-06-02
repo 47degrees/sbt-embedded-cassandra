@@ -9,6 +9,7 @@ addCommandAlias("ci-docs", "documentation/mdoc; headerCreateAll")
 
 lazy val plugin = project
   .in(file("."))
+  .enablePlugins(SbtPlugin)
   .dependsOn(core)
   .aggregate(core)
   .settings(pluginSettings: _*)
@@ -24,13 +25,11 @@ lazy val documentation = project
   .dependsOn(core, plugin)
 
 lazy val pluginSettings: Seq[Def.Setting[_]] = Seq(
-  moduleName := "sbt-embedded-cassandra",
-  sbtPlugin := true,
+  moduleName := "sbt-embedded-cassandra"
 )
 
 lazy val coreSettings: Seq[Def.Setting[_]] = Seq(
   moduleName := "embedded-cassandra-core",
-  sbtPlugin := false,
   resolvers += Resolver.typesafeIvyRepo("releases").withName("typesafe-alt-ivy-releases"),
   libraryDependencies ++= Seq(
     "com.47deg"              %% "org-policies-core"    % "0.13.3",
