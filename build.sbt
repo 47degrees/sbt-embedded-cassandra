@@ -3,7 +3,7 @@ ThisBuild / scalaVersion := "2.12.11"
 
 addCommandAlias(
   "ci-test",
-  "+scalafmtCheck; +scalafmtSbtCheck; +coverage; +test; +coverageReport; +coverageAggregate"
+  "scalafmtCheck; scalafmtSbtCheck; +coverage; +test; +coverageReport; +coverageAggregate"
 )
 addCommandAlias("ci-docs", "mdoc; headerCreateAll")
 
