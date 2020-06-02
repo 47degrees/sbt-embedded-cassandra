@@ -5,7 +5,7 @@ addCommandAlias(
   "ci-test",
   "+scalafmtCheck; +scalafmtSbtCheck; +coverage; +test; +coverageReport; +coverageAggregate"
 )
-addCommandAlias("ci-docs", "project-docs/mdoc; headerCreateAll")
+addCommandAlias("ci-docs", "documentation/mdoc; headerCreateAll")
 
 lazy val plugin = project
   .in(file("."))
@@ -17,14 +17,11 @@ lazy val core = project
   .in(file("core"))
   .settings(coreSettings: _*)
 
-lazy val `project-docs` = (project in file(".docs"))
-  .aggregate(core, plugin)
-  .dependsOn(core, plugin)
-  .settings(moduleName := "project-docs")
-  .settings(mdocIn := file(".docs"))
+lazy val documentation = project
+  .enablePlugins(MdocPlugin)
   .settings(mdocOut := file("."))
   .settings(skip in publish := true)
-  .enablePlugins(MdocPlugin)
+  .dependsOn(core, plugin)
 
 lazy val pluginSettings: Seq[Def.Setting[_]] = Seq(
   moduleName := "sbt-embedded-cassandra",
