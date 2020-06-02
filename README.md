@@ -1,5 +1,5 @@
 
-[![codecov.io](http://codecov.io/github/47degrees/sbt-embedded-cassandra/coverage.svg?branch=master)](http://codecov.io/github/47degrees/sbt-embedded-cassandra?branch=master) [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.6-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47degrees/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47degrees/sbt-embedded-cassandra.svg)](https://github.com/47degrees/sbt-embedded-cassandra/issues)
+[![Maven Central](https://img.shields.io/badge/maven%20central-0.0.6-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47degrees/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47degrees/sbt-embedded-cassandra.svg)](https://github.com/47degrees/sbt-embedded-cassandra/issues)
 
 # sbt-embedded-cassandra
 

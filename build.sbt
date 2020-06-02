@@ -1,10 +1,7 @@
 ThisBuild / organization := "com.47deg"
 ThisBuild / scalaVersion := "2.12.11"
 
-addCommandAlias(
-  "ci-test",
-  "scalafmtCheck; scalafmtSbtCheck; +coverage; +test; +coverageReport; +coverageAggregate"
-)
+addCommandAlias("ci-test", "scalafmtCheck; scalafmtSbtCheck")
 addCommandAlias("ci-docs", "mdoc; headerCreateAll")
 
 lazy val `sbt-embedded-cassandra` = project
