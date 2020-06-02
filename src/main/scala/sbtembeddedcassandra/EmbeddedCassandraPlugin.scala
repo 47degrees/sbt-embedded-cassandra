@@ -63,8 +63,8 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
         _    <- deleteDir(workingDir)
         yaml <- copyFile(workingDir, cassandraConfInput, variables, cassandraConfOutput)
         _    <- copyFile(workingDir, cassandraLog4jInput, Map.empty, cassandraLog4jOutput)
-        _    <- setCassandraProperties(yaml, workingDir, cassandraConfOutput, cassandraLog4jOutput)
-        _    <- startCassandra(yaml, workingDir, 60.seconds)
+        _    <- setCassandraProperties(yaml, workingDir, cassandraLog4jOutput)
+        _    <- startCassandra(60.seconds)
         _    <- statementsFile.map(executeStatements(properties, _)).getOrElse(Right((): Unit))
       } yield ()).logErrorOr(sbtLogger(logger), "Cassandra started")
     }

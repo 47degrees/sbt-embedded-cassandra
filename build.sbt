@@ -26,7 +26,6 @@ lazy val documentation = project
 lazy val pluginSettings: Seq[Def.Setting[_]] = Seq(
   moduleName := "sbt-embedded-cassandra",
   sbtPlugin := true,
-  scalacOptions := Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-unchecked")
 )
 
 lazy val coreSettings: Seq[Def.Setting[_]] = Seq(
