@@ -3,6 +3,7 @@ ThisBuild / scalaVersion := "2.12.11"
 
 addCommandAlias("ci-test", "scalafmtCheck; scalafmtSbtCheck; mdoc")
 addCommandAlias("ci-docs", "mdoc; headerCreateAll")
+addCommandAlias("ci-publish", "ci-release")
 
 lazy val `sbt-embedded-cassandra` = project
   .enablePlugins(SbtPlugin)
