@@ -18,7 +18,6 @@ package sbtembeddedcassandra
 
 import sbt._
 import sbt.Keys._
-import cats.syntax.either._
 import sbtembeddedcassandra.cassandra.CassandraUtils
 import sbtembeddedcassandra.io.IOUtils
 import sbtembeddedcassandra.syntax._
