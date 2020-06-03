@@ -41,7 +41,6 @@ object CassandraUtils {
   def setCassandraProperties(
       yaml: File,
       workingDir: File,
-      confFileName: String,
       log4jFileName: String
   ): CResult[List[Option[String]]] = {
 
@@ -63,7 +62,7 @@ object CassandraUtils {
     (properties ++ log4jProperty).traverse(setProperty)
   }
 
-  def startCassandra(yaml: File, workingDir: File, timeout: Duration): CResult[Unit] = {
+  def startCassandra(timeout: Duration): CResult[Unit] = {
 
     def init: CResult[Int] =
       Either.catchNonFatal {

@@ -12,7 +12,7 @@ The goal of this project is to provide a way to add integration tests using Cass
 ### Add to plugins.sbt
 
 ```scala
-addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.6")
+addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "@VERSION@")
 ```
 
 ### Start Cassandra from SBT
@@ -27,7 +27,7 @@ addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.6")
 
 * `embeddedCassandraPropertiesSetting: Map[String, String]`: Properties to replace in the `cassandra.yml` template. Internally, the plugin will add a new property to the map named `workingDirectory` with the value of the previous setting.
 
-* `embeddedCassandraConfigFileSetting: Option[File]`: Defines a custom template config file, `None` by default. When this setting is `None` it will use the following [template from the resources](core/src/main/resources/basic-cassandra-conf.yml) 
+* `embeddedCassandraConfigFileSetting: Option[File]`: Defines a custom template config file, `None` by default. When this setting is `None` it will use the following [template from the resources](embedded-cassandra-core/src/main/resources/basic-cassandra-conf.yml) 
 
 * `embeddedCassandraCQLFileSetting: Option[File]`: Defines a CQL file with statements ended with `;` that will be executed after starting the service.
 
