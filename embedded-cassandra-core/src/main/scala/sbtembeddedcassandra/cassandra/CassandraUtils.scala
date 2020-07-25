@@ -76,9 +76,8 @@ object CassandraUtils {
         Future(daemon.activate()).map(Right(_)).recover {
           case e => Left(e)
         }
-      try {
-        Await.result(future, timeout)
-      } catch {
+      try Await.result(future, timeout)
+      catch {
         case NonFatal(e) => Left(e)
       }
     }
@@ -97,13 +96,14 @@ object CassandraUtils {
       statements: List[String]
   ): CResult[Unit] = {
 
-    def buildCluster(): CResult[Cluster] = Either.catchNonFatal {
-      new Cluster.Builder()
-        .withClusterName(clusterName)
-        .addContactPoint(listenAddress)
-        .withPort(nativePort.toInt)
-        .build()
-    }
+    def buildCluster(): CResult[Cluster] =
+      Either.catchNonFatal {
+        new Cluster.Builder()
+          .withClusterName(clusterName)
+          .addContactPoint(listenAddress)
+          .withPort(nativePort.toInt)
+          .build()
+      }
 
     def executeStatement(session: Session, statement: String): CResult[Unit] =
       Either.catchNonFatal(session.execute(statement)).map(_ => (): Unit)

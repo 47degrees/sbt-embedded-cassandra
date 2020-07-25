@@ -35,10 +35,11 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
   private[this] val cassandraLog4jInput  = "/basic-cassandra-log4j.properties"
   private[this] val cassandraLog4jOutput = "log4j.properties"
 
-  def sbtLogger(logger: Logger): SyntaxLogger = new SyntaxLogger {
-    override def error(msg: String): Unit = logger.error(msg)
-    override def info(msg: String): Unit  = logger.info(msg)
-  }
+  def sbtLogger(logger: Logger): SyntaxLogger =
+    new SyntaxLogger {
+      override def error(msg: String): Unit = logger.error(msg)
+      override def info(msg: String): Unit  = logger.info(msg)
+    }
 
   lazy val embeddedCassandraDefaultSettings: Seq[Def.Setting[_]] = Seq(
     embeddedCassandraPropertiesSetting := defaultProperties,
