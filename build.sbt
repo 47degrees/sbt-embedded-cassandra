@@ -15,7 +15,7 @@ lazy val `embedded-cassandra-core` = project
     libraryDependencies ++= Seq(
       "com.47deg"              %% "org-policies-core"    % "0.13.3",
       "com.datastax.cassandra" % "cassandra-driver-core" % "3.9.0",
-      "org.apache.cassandra"   % "cassandra-all"         % "3.11.6"
+      "org.apache.cassandra"   % "cassandra-all"         % "3.11.7"
     )
   )
 
