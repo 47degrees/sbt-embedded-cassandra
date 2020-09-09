@@ -72,8 +72,8 @@ sealed trait EmbeddedCassandraSettingsKeys extends EmbeddedCassandraDefaultValue
   val embeddedCassandraWorkingDirectorySetting: SettingKey[File] =
     settingKey[File](s"Output directory for Cassandra. Defaults to '$defaultWorkingDirectory")
 
-  private[this] lazy val prettyProperties: String = defaultProperties map {
-    case (key, value) => s" * $key ($value)"
+  private[this] lazy val prettyProperties: String = defaultProperties map { case (key, value) =>
+    s" * $key ($value)"
   } mkString "\n"
 }
 
