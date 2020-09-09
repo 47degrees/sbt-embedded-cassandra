@@ -73,12 +73,11 @@ object CassandraUtils {
     def startCassandra(daemon: CassandraDaemon): CResult[Unit] = {
       import scala.concurrent.ExecutionContext.Implicits.global
       val future: Future[CResult[Unit]] =
-        Future(daemon.activate()).map(Right(_)).recover {
-          case e => Left(e)
+        Future(daemon.activate()).map(Right(_)).recover { case e =>
+          Left(e)
         }
-      try {
-        Await.result(future, timeout)
-      } catch {
+      try Await.result(future, timeout)
+      catch {
         case NonFatal(e) => Left(e)
       }
     }
