@@ -13,8 +13,8 @@ lazy val `embedded-cassandra-core` = project
   .settings(resolvers += Resolver.typesafeIvyRepo("releases").withName("typesafe-alt-ivy-releases"))
   .settings(
     libraryDependencies ++= Seq(
-      "com.47deg"              %% "org-policies-core"    % "0.13.3",
-      "com.datastax.cassandra" % "cassandra-driver-core" % "4.0.0",
+      "com.47deg"             %% "org-policies-core"     % "0.13.3",
+      "com.datastax.cassandra" % "cassandra-driver-core" % "3.10.2",
       "org.apache.cassandra"   % "cassandra-all"         % "3.11.8"
     )
   )

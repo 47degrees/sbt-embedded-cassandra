@@ -42,18 +42,19 @@ object IOUtils {
 
     val replaceTextEngine = new ReplaceTextEngine
     val outputFile        = new File(workingDir, outputFileName)
-    val replacements = variables.map {
-      case (key, value) => "\\$\\{" + key + "\\}" -> value
+    val replacements = variables.map { case (key, value) =>
+      "\\$\\{" + key + "\\}" -> value
     }
 
     for {
       _       <- FileWriter.createDir(workingDir)
       content <- readCassandraFile
       _       <- FileWriter.writeContentToFile(content, outputFile.getAbsolutePath)
-      _ <- if (variables.isEmpty) Right(Nil)
-      else {
-        replaceTextEngine.replaceTexts(replacements, List(outputFile), _ => true)
-      }
+      _ <-
+        if (variables.isEmpty) Right(Nil)
+        else {
+          replaceTextEngine.replaceTexts(replacements, List(outputFile), _ => true)
+        }
     } yield outputFile
   }
 
