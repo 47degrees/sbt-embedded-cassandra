@@ -41,8 +41,8 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
   }
 
   lazy val embeddedCassandraDefaultSettings: Seq[Def.Setting[_]] = Seq(
-    embeddedCassandraPropertiesSetting := defaultProperties,
-    embeddedCassandraConfigFileSetting := defaultConfigFile,
+    embeddedCassandraPropertiesSetting       := defaultProperties,
+    embeddedCassandraConfigFileSetting       := defaultConfigFile,
     embeddedCassandraWorkingDirectorySetting := file(defaultWorkingDirectory)
   ) ++ embeddedCassandraKeysDef
 
@@ -78,7 +78,7 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
       listenAddress <- variables.get(listenAddressProp).toEither
       nativePort    <- variables.get(nativeTransportPortProp).toEither
       statements    <- IOUtils.readStatements(statementsFile)
-      _             <- CassandraUtils.executeCQLStatements(clusterName, listenAddress, nativePort, statements)
+      _ <- CassandraUtils.executeCQLStatements(clusterName, listenAddress, nativePort, statements)
     } yield ()
 
   override def projectSettings: Seq[Def.Setting[_]] = embeddedCassandraDefaultSettings
