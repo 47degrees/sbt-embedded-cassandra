@@ -33,7 +33,7 @@ addSbtPlugin("com.47deg" % "sbt-embedded-cassandra" % "0.0.7")
 
 ## Supported Cassandra version
 
-Currently, the plugin uses the version `3.9` of [`cassandra-all`](http://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all) library. Take a look to the [issues](https://github.com/47degrees/sbt-embedded-cassandra/issues) to stay informed about latest improvements and limitations. 
+Check the version of [`cassandra-all`](http://mvnrepository.com/artifact/org.apache.cassandra/cassandra-all) library currenly supported and take a look to the current [issues](https://github.com/47degrees/sbt-embedded-cassandra/issues) to stay informed about latest improvements and limitations. 
 
 ## sbt-embedded-cassandra in the wild not found
 
