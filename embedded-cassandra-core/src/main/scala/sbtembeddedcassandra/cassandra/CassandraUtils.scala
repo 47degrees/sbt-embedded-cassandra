@@ -17,12 +17,12 @@
 package sbtembeddedcassandra.cassandra
 
 import java.io.File
-
+import java.net.InetSocketAddress
 import cats.instances.either._
 import cats.instances.list._
 import cats.syntax.either._
 import cats.syntax.traverse._
-import com.datastax.driver.core.{Cluster, Session}
+import com.datastax.oss.driver.api.core.CqlSession
 import org.apache.cassandra.config.DatabaseDescriptor
 import org.apache.cassandra.db.commitlog.CommitLog
 import org.apache.cassandra.service.CassandraDaemon
@@ -90,31 +90,33 @@ object CassandraUtils {
   }
 
   def executeCQLStatements(
-      clusterName: String,
       listenAddress: String,
-      nativePort: String,
+      nativePort: Int,
       statements: List[String]
   ): CResult[Unit] = {
 
-    def buildCluster(): CResult[Cluster] = Either.catchNonFatal {
-      new Cluster.Builder()
-        .withClusterName(clusterName)
-        .addContactPoint(listenAddress)
-        .withPort(nativePort.toInt)
+    CqlSession
+      .builder()
+      .addContactPoint(InetSocketAddress.createUnresolved(listenAddress, nativePort))
+      .build()
+
+    def buildSession(): CResult[CqlSession] = Either.catchNonFatal {
+      CqlSession
+        .builder()
+        .addContactPoint(InetSocketAddress.createUnresolved(listenAddress, nativePort))
         .build()
     }
 
-    def executeStatement(session: Session, statement: String): CResult[Unit] =
+    def executeStatement(session: CqlSession, statement: String): CResult[Unit] =
       Either.catchNonFatal(session.execute(statement)).map(_ => (): Unit)
 
-    def executeStatements(cluster: Cluster): CResult[Unit] =
+    def executeStatements(session: CqlSession): CResult[Unit] =
       for {
-        session <- Either.catchNonFatal(cluster.connect())
-        _       <- statements.traverse(executeStatement(session, _)).map(_ => (): Unit)
-        _       <- Either.catchNonFatal(session.close())
+        _ <- statements.traverse(executeStatement(session, _)).map(_ => (): Unit)
+        _ <- Either.catchNonFatal(session.close())
       } yield ()
 
-    buildCluster() flatMap { cluster => executeStatements(cluster).guarantee(cluster.close()) }
+    buildSession() flatMap { cluster => executeStatements(cluster).guarantee(cluster.close()) }
   }
 
 }
