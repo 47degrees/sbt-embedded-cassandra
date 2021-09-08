@@ -23,6 +23,7 @@ import sbtembeddedcassandra.io.IOUtils
 import sbtembeddedcassandra.syntax._
 
 import scala.concurrent.duration._
+import scala.util.Try
 
 object EmbeddedCassandraPlugin extends AutoPlugin {
 
@@ -74,11 +75,11 @@ object EmbeddedCassandraPlugin extends AutoPlugin {
       statementsFile: File
   ): CResult[Unit] =
     for {
-      clusterName   <- variables.get(clusterNameProp).toEither
       listenAddress <- variables.get(listenAddressProp).toEither
       nativePort    <- variables.get(nativeTransportPortProp).toEither
+      parsedPort    <- Try(nativePort.toInt).toEither
       statements    <- IOUtils.readStatements(statementsFile)
-      _ <- CassandraUtils.executeCQLStatements(clusterName, listenAddress, nativePort, statements)
+      _             <- CassandraUtils.executeCQLStatements(listenAddress, parsedPort, statements)
     } yield ()
 
   override def projectSettings: Seq[Def.Setting[_]] = embeddedCassandraDefaultSettings
