@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.47deg"
-ThisBuild / scalaVersion := "2.12.11"
+ThisBuild / scalaVersion := "2.12.15"
 
 addCommandAlias("ci-test", "scalafmtCheck; scalafmtSbtCheck; mdoc")
 addCommandAlias("ci-docs", "github; mdoc; headerCreateAll")
