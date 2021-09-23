@@ -1,3 +1,7 @@
+**THIS PROJECT IS DISCONTINUED — USE AT YOUR OWN RISK**
+
+It has been a fun and great project but it's time for us to move on. Check out our recent work that we are doing with Scala and follow us on Github and Twitter for new and exciting open source projects. Thanks for your continuing support. If you wish to take on maintenance of this library please contact us through the issue tracker.
+
 
 [![Maven Central](https://img.shields.io/badge/maven%20central-0.0.6-green.svg)](https://repo1.maven.org/maven2/com/47deg/sbt-embedded-cassandra_2.12_1.0) [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/47degrees/sbt-embedded-cassandra/master/LICENSE) [![GitHub Issues](https://img.shields.io/github/issues/47degrees/sbt-embedded-cassandra.svg)](https://github.com/47degrees/sbt-embedded-cassandra/issues)
 
